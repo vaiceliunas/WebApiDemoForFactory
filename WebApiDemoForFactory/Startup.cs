@@ -11,8 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using NLog;
+using WebApiDemoForFactory.Models.DbContexts;
 using WebApiDemoForFactory.Models.Factories;
 using WebApiDemoForFactory.Models.Validators;
 using WebApiDemoForFactory.Models.Validators.Interfaces;
@@ -34,11 +37,15 @@ namespace WebApiDemoForFactory
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonValidator, PersonValidator>();
             services.AddScoped<IPersonFactory, PersonFactory>();
             services.AddScoped<IPersonDataRepository, PersonDataRepository>();
+            services.AddDbContext<PeopleDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DemoDb")));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiDemoForFactory", Version = "v1" });

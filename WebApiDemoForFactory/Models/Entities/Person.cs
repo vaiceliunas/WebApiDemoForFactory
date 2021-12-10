@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApiDemoForFactory.Models.Entities;
 
 namespace WebApiDemoForFactory.Models
 {
@@ -12,6 +13,7 @@ namespace WebApiDemoForFactory.Models
         public string Surname{ get; set; }
         public string Address { get; set; }
         public DateTime? BirthDate { get; set; }
-        public int HeightInCm { get; set; }
+        public string PersonalCode { get; set; }
+        public ICollection<StdProperty> StdProperties { get; set; }
     }
 }

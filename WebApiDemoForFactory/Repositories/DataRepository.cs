@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApiDemoForFactory.Models;
+using WebApiDemoForFactory.Models.DbContexts;
 
 namespace WebApiDemoForFactory.Repositories
 {
     public class PersonDataRepository : IPersonDataRepository
     {
+        private readonly PeopleDbContext _context;
+
+        public PersonDataRepository(PeopleDbContext ctx)
+        {
+            _context = ctx;
+        }
         public List<Person> GetObjects()
         {
             return new List<Person>();
@@ -27,7 +34,8 @@ namespace WebApiDemoForFactory.Repositories
 
         public Person SavePerson(Person person)
         {
-            //saugojimas I DB
+            _context.Persons.Add(person);
+            _context.SaveChanges();
             return person;
         }
     }

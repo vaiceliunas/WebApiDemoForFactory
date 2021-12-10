@@ -20,8 +20,7 @@ namespace WebApiDemoForFactory.Models.Factories
                 Address = address,
                 Name = name,
                 Surname = surname,
-                BirthDate = birthDate,
-                HeightInCm = heightInCm
+                BirthDate = birthDate
             };
         }
     }
